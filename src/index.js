@@ -1,17 +1,50 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+
+
+class CalButton extends React.Component {
+    render(){
+    return (
+        <button className="c_button">
+        {this.props.value}
+        </button>
+    );
+    }
+}
+
+class Calculator extends React.Component {
+    renderButton(i) {
+        return <CalButton value={i} />
+    }
+    render() {
+    return (
+        <div>
+        {this.renderButton(0)}
+        {this.renderButton(1)}
+        {this.renderButton(2)}
+        {this.renderButton(3)}
+        {this.renderButton(4)}
+        {this.renderButton(5)}
+        {this.renderButton(6)}
+        {this.renderButton(7)}
+        {this.renderButton(8)}
+        {this.renderButton(9)}
+        </div>
+        );
+    }
+}
+
+
+function App() {
+    return (
+        <div>
+            <Calculator/>
+        </div>
+    );
+}
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <App />,
+    document.getElementById('root')
 );
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
