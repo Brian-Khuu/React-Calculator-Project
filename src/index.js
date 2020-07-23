@@ -14,17 +14,22 @@ class CalButton extends React.Component {
     }
 }
 
-class Calculator extends React.Component {
+class CalOutput extends React.Component {
+    render() {
+        return (
+        <p>Hello World</p>
+        )
+    }
+}
 
+
+class CalculatorInput extends React.Component {
     renderButton(i) {
         return <CalButton
-        value={i}
-
-        />
+        value={i} />
     }
-
     render() {
-    return (
+        return (
         <div>
         {this.renderButton(0)}
         {this.renderButton(1)}
@@ -36,10 +41,28 @@ class Calculator extends React.Component {
         {this.renderButton(7)}
         {this.renderButton(8)}
         {this.renderButton(9)}
-
         </div>
         );
     }
+}
+
+class Calculator extends React.Component {
+    constructor(props) {
+        super(props);
+
+    }
+
+    render() {
+        return (
+        <div>
+        <CalculatorInput/>
+        <CalOutput/>
+        </div>
+    );
+
+    }
+
+
 }
 
 
@@ -166,6 +189,6 @@ class WaterDisplay extends React.Component {
 }
 
 ReactDOM.render(
-    <WaterDisplay />,
+    <App />,
     document.getElementById('root')
 );
