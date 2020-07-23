@@ -86,18 +86,35 @@ function BoilingPoint(props) {
     return <p>The water does not boil.</p>;
 }
 
+function toCelsius(fahrenheit) {
+    return (fahrenheit - 32) * 5 / 9;
+}
+
+function toFahrenheit(celsius) {
+    return (celsius * 9 / 5) + 32;
+}
+
+function Converter(temperature, conversion) {
+    const input = parseFloat(temperature);
+    if (Number.isNaN(input)) {
+    return '';
+    }
+    const output = conversion(input);
+    const rounded = Math.round(output * 1000) / 1000;
+    return rounded.toString()
+}
+
 class WaterCalculator extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {temperature: ''}
     }
 
     handleChange = (e) => {
-        this.setState({temperature: e.target.value});
+        this.props.onTemperatureChange(e.target.value);
     }
 
     render() {
-        const temperature = this.state.temperature;
+        const temperature = this.props.temperature;
         const temp = this.props.temp;
         return (
             <fieldset>
@@ -105,19 +122,44 @@ class WaterCalculator extends React.Component {
                 <input
                     value={temperature}
                     onChange={this.handleChange} />
-                <BoilingPoint
-                    celsius={parseFloat(temperature)} />
             </fieldset>
         )
     }
 }
 
 class WaterDisplay extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {temperature: '', temp: 'c'};
+    }
+
+    handleCelsiusChange = (temperature) => {
+        this.setState({temp: 'c', temperature});
+    }
+
+    handleFahrenheitChange = (temperature) => {
+        this.setState({temp: 'f', temperature})
+    }
+
     render() {
+        const temp = this.state.temp;
+        const temperature = this.state.temperature;
+        const celsius = temp === 'f' ? Converter(temperature, toCelsius) : temperature;
+        const fahrenheit = temp === 'c' ? Converter(temperature, toFahrenheit) : temperature;
+
         return (
             <div>
-                <WaterCalculator temp ="c" />
-                <WaterCalculator temp ="f" />
+                <WaterCalculator
+                temp ="c"
+                temperature={celsius}
+                onTemperatureChange={this.handleCelsiusChange} />
+                <WaterCalculator
+                temp ="f"
+                temperature={fahrenheit}
+                onTemperatureChange={this.handleFahrenheitChange} />
+
+                <BoilingPoint
+                    celsius={parseFloat(celsius)} />
             </div>
         )
     }
