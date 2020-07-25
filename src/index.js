@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 
+//Calculator Button Component
 class CalButton extends React.Component {
     render(){
     return (
@@ -14,6 +15,8 @@ class CalButton extends React.Component {
     }
 }
 
+
+//Calculator Output Pad Component
 class CalOutput extends React.Component {
     render() {
         return (
@@ -23,7 +26,14 @@ class CalOutput extends React.Component {
 }
 
 
+//Calculator Input Pad Component
 class CalculatorInput extends React.Component {
+    constructor(props) {
+        super(props);
+
+    }
+
+
     renderButton(i) {
         return <CalButton
         value={i} />
@@ -46,13 +56,23 @@ class CalculatorInput extends React.Component {
     }
 }
 
+
+//Main Calculator Component
 class Calculator extends React.Component {
     constructor(props) {
         super(props);
-
+        this.state = {output: ''}
     }
 
+
+    handleClick = (i) => {
+        this.props.onCalClick(i.target.value)
+    }
+
+
     render() {
+        const output = this.state.output
+
         return (
         <div>
         <CalculatorInput/>
@@ -66,6 +86,7 @@ class Calculator extends React.Component {
 }
 
 
+//Main function
 function App() {
     return (
         <div>
@@ -73,6 +94,8 @@ function App() {
         </div>
     );
 }
+
+
 /*
 class Toggle extends React.Component {
     constructor(props) {
