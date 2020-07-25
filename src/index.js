@@ -18,9 +18,14 @@ class CalButton extends React.Component {
 
 //Calculator Output Pad Component
 class CalOutput extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {value: 'test'}
+    }
+
     render() {
         return (
-        <p>Hello World</p>
+        <p>{this.state.value}</p>
         )
     }
 }
