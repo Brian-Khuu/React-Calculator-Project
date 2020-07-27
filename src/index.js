@@ -3,19 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 
-//Calculator Button Component
-class CalButton extends React.Component {
-    render(){
-    return (
-        <button
-        className="c_button">
-        {this.props.value}
-        </button>
-    );
-    }
-}
-
-
 //Calculator Output Pad Component
 class CalOutput extends React.Component {
     constructor(props) {
@@ -39,23 +26,26 @@ class CalculatorInput extends React.Component {
     }
 
 
-    renderButton(i) {
-        return <CalButton
-        value={i} />
-    }
     render() {
         return (
-        <div>
-        {this.renderButton(0)}
-        {this.renderButton(1)}
-        {this.renderButton(2)}
-        {this.renderButton(3)}
-        {this.renderButton(4)}
-        {this.renderButton(5)}
-        {this.renderButton(6)}
-        {this.renderButton(7)}
-        {this.renderButton(8)}
-        {this.renderButton(9)}
+        <div className="button">
+            <button name="(" onClick={e => this.props.onClick(e.target.name)}>(</button>
+            <button name=")" onClick={e => this.props.onClick(e.target.name)}>)</button>
+            <button name="CE" onClick={e => this.props.onClick(e.target.name)}>CE</button>
+            <button name="C" onClick={e => this.props.onClick(e.target.name)}>C</button>
+
+            <button name="1" onClick={e => this.props.onClick(e.target.name)}>1</button>
+            <button name="2" onClick={e => this.props.onClick(e.target.name)}>2</button>
+            <button name="3" onClick={e => this.props.onClick(e.target.name)}>3</button>
+            <button name="4" onClick={e => this.props.onClick(e.target.name)}>4</button>
+            <button name="5" onClick={e => this.props.onClick(e.target.name)}>5</button>
+            <button name="6" onClick={e => this.props.onClick(e.target.name)}>6</button>
+            <button name="7" onClick={e => this.props.onClick(e.target.name)}>7</button>
+            <button name="8" onClick={e => this.props.onClick(e.target.name)}>8</button>
+            <button name="9" onClick={e => this.props.onClick(e.target.name)}>9</button>
+            <button name="0" onClick={e => this.props.onClick(e.target.name)}>0</button>
+
+
         </div>
         );
     }
@@ -69,9 +59,25 @@ class Calculator extends React.Component {
         this.state = {output: ''}
     }
 
+    onClick = button => {
+        if(button === "=") {
+            this.calculate()
+        }
 
-    handleClick = (i) => {
-        this.props.onCalClick(i.target.value)
+        else if(button === "C") {
+            this.clear()
+        }
+
+        else if(button === "CE") {
+            this.backspace()
+        }
+
+        else {
+            this.setState({
+                result: this.state.result + button
+            })
+        }
+
     }
 
 
