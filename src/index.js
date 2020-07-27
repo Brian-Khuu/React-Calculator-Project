@@ -5,14 +5,12 @@ import './index.css';
 
 //Calculator Output Pad Component
 class CalOutput extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {value: 'test'}
-    }
-
     render() {
+        let {result} = this.props;
         return (
-        <p>{this.state.value}</p>
+        <div className="result">
+        <p>{result}</p>
+        </div>
         )
     }
 }
@@ -45,6 +43,12 @@ class CalculatorInput extends React.Component {
             <button name="9" onClick={e => this.props.onClick(e.target.name)}>9</button>
             <button name="0" onClick={e => this.props.onClick(e.target.name)}>0</button>
 
+            <button name="+" onClick={e => this.props.onClick(e.target.name)}>+</button>
+            <button name="-" onClick={e => this.props.onClick(e.target.name)}>-</button>
+            <button name="*" onClick={e => this.props.onClick(e.target.name)}>*</button>
+            <button name="/" onClick={e => this.props.onClick(e.target.name)}>/</button>
+            <button name="=" onClick={e => this.props.onClick(e.target.name)}>=</button>
+
 
         </div>
         );
@@ -56,7 +60,32 @@ class CalculatorInput extends React.Component {
 class Calculator extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {output: ''}
+        this.state = {result: ''}
+    }
+
+    calculate = () => {
+        try {
+            this.setState({
+                result:(eval(this.state.result) || "" ) + ""
+            })
+        }
+        catch (e) {
+            this.setState({
+                result: "error"
+            })
+        }
+    }
+
+    clear = () => {
+        this.setState({
+            result: ""
+        })
+    }
+
+    backspace = () => {
+        this.setState({
+            result: this.state.result.slice(0, -1)
+        })
     }
 
     onClick = button => {
@@ -86,8 +115,8 @@ class Calculator extends React.Component {
 
         return (
         <div>
-        <CalculatorInput/>
-        <CalOutput/>
+        <CalculatorInput onClick={this.onClick}/>
+        <CalOutput result={this.state.result}/>
         </div>
     );
 
